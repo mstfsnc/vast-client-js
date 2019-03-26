@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DAAST version="1.0" xmlns:MM="http://example.com/V1/DataContracts">
+  <Ad id="ad_id_0001" xmlns:MM="https://example.com/V1/DataContracts">
+    <InLine>
+      <AdSystem><![CDATA[AdServer]]></AdSystem>
+      <AdTitle><![CDATA[Ad title]]></AdTitle>
+      <Description><![CDATA[Description text]]></Description>
+      <Impression><![CDATA[http://example.com/impression1_asset:[ASSETURI]_[CACHEBUSTING]]]></Impression>
+      <Impression><![CDATA[http://example.com/impression2_[random]]]></Impression>
+      <Impression><![CDATA[http://example.com/impression3_[RANDOM]]]></Impression>
+      <Creatives>
+        <Creative id="id130984" AdID="adId345690" sequence="1">
+          <Linear>
+            <Duration>00:00:15</Duration>
+            <TrackingEvents>
+              <Tracking event="creativeView"><![CDATA[http://example.com/linear-creativeView]]></Tracking>
+              <Tracking event="midpoint"><![CDATA[http://example.com/linear-midpoint]]></Tracking>
+              <Tracking event="complete"><![CDATA[http://example.com/linear-complete]]></Tracking>
+              <Tracking event="start"><![CDATA[http://example.com/linear-start]]></Tracking>
+              <Tracking event="firstQuartile"><![CDATA[http://example.com/linear-firstQuartile]]></Tracking>
+              <Tracking event="close"><![CDATA[http://example.com/linear-close]]></Tracking>
+              <Tracking event="thirdQuartile"><![CDATA[http://example.com/linear-thirdQuartile]]></Tracking>
+              <Tracking event="progress" offset="00:00:12.000"><![CDATA[http://example.com/linear-progress-12sec]]></Tracking>
+              <Tracking event="progress" offset="60%"><![CDATA[http://example.com/linear-progress-60%]]></Tracking>
+              <Tracking event="mute"><![CDATA[http://example.com/linear-mute]]></Tracking>
+              <Tracking event="unmute"><![CDATA[http://example.com/linear-unmute]]></Tracking>
+              <Tracking event="pause"><![CDATA[http://example.com/linear-pause]]></Tracking>
+            </TrackingEvents>
+            <MediaFiles>
+              <MediaFile id="438348089" bitrate="320" type="audio/mpeg" delivery="progressive" xmlns:MM="http://example.com/V1/DataContracts"><![CDATA[http://example.com/linear-asset.mp4]]></MediaFile>
+            </MediaFiles>
+          </Linear>
+        </Creative>
+        <Creative id="57857137" AdID="57857137" sequence="1">
+          <CompanionAds></CompanionAds>
+        </Creative>
+      </Creatives>
+    </InLine>
+  </Ad>
+  
+</DAAST>

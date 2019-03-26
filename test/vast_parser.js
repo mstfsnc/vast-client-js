@@ -984,6 +984,68 @@ describe('VASTParser', function() {
     });
   });
 
+  describe('#parseDAAST', function() {
+    const options = {
+      urlhandler: nodeURLHandler
+    };
+    this.response = null;
+    this.templateFilterCalls = [];
+
+    before(done => {
+      vastParser.addURLTemplateFilter(url => {
+        this.templateFilterCalls.push(url);
+        return url;
+      });
+      const url = urlfor('daast.xml');
+      vastParser.urlHandler.get(url, {}, (err, xml) => {
+        // `VAST > Wrapper > VASTAdTagURI` in the VAST must be an absolute URL
+        for (let nodeKey in xml.documentElement.childNodes) {
+          const node = xml.documentElement.childNodes[nodeKey];
+
+          if (node.nodeName === 'Ad') {
+            for (let adNodeKey in node.childNodes) {
+              const adNode = node.childNodes[adNodeKey];
+
+              if (adNode.nodeName === 'Wrapper') {
+                for (let wrapperNodeKey in adNode.childNodes) {
+                  const wrapperNode = adNode.childNodes[wrapperNodeKey];
+
+                  if (wrapperNode.nodeName === 'VASTAdTagURI') {
+                    wrapperNode.textContent = urlfor(
+                      parserUtils.parseNodeText(wrapperNode)
+                    );
+                    break;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        vastParser.parseVAST(xml, options).then(response => {
+          this.response = response;
+          done();
+        });
+      });
+    });
+
+    after(() => {
+      vastParser.clearURLTemplateFilters();
+    });
+
+    it('should have 1 filter defined', () => {
+      vastParser.countURLTemplateFilters().should.equal(1);
+    });
+
+    it('should have found 1 ad', () => {
+      this.response.ads.should.have.length(1);
+    });
+
+    it('should have returned a VAST response object', () => {
+      this.response.should.be.an.instanceOf(VASTResponse);
+    });
+  });
+
   describe('#Tracking', function() {
     let trackCalls = null;
     let dataTriggered = null;
@@ -1121,7 +1183,10 @@ describe('VASTParser', function() {
             // Error returned
             err.should.be
               .instanceof(Error)
-              .and.have.property('message', 'Invalid VAST XMLDocument');
+              .and.have.property(
+                'message',
+                'Invalid VAST or DAAST XMLDocument'
+              );
             done();
           });
       });

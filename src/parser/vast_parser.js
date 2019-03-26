@@ -245,13 +245,13 @@ export class VASTParser extends EventEmitter {
       isRootVAST = false
     }
   ) {
-    // check if is a valid VAST document
+    // check if is a valid VAST or DAAST document
     if (
       !vastXml ||
       !vastXml.documentElement ||
-      vastXml.documentElement.nodeName !== 'VAST'
+      ['VAST', 'DAAST'].indexOf(vastXml.documentElement.nodeName) === -1
     ) {
-      return Promise.reject(new Error('Invalid VAST XMLDocument'));
+      return Promise.reject(new Error('Invalid VAST or DAAST XMLDocument'));
     }
 
     let ads = [];

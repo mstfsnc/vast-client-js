@@ -2038,9 +2038,9 @@ var VAST = (function (exports) {
             _ref$isRootVAST = _ref.isRootVAST,
             isRootVAST = _ref$isRootVAST === undefined ? false : _ref$isRootVAST;
 
-        // check if is a valid VAST document
-        if (!vastXml || !vastXml.documentElement || vastXml.documentElement.nodeName !== 'VAST') {
-          return Promise.reject(new Error('Invalid VAST XMLDocument'));
+        // check if is a valid VAST or DAAST document
+        if (!vastXml || !vastXml.documentElement || ['VAST', 'DAAST'].indexOf(vastXml.documentElement.nodeName) === -1) {
+          return Promise.reject(new Error('Invalid VAST or DAAST XMLDocument'));
         }
 
         var ads = [];
